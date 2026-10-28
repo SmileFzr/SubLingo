@@ -4,6 +4,20 @@
 
 > 原项目为 YouTube 专用（youtube-subtitle-translator），v3.1 起重构为多站点引擎。
 
+## 📸 效果预览
+
+**YouTube 直播** —— 站内 CC 逐句翻译，上行中文、下行英文原文：
+
+<img src="docs/images/youtube-live.jpg" alt="YouTube 直播实时双语字幕" width="100%">
+
+**TikTok 直播间** —— 竖屏按视频实际画面区域定位，字幕不会溢到聊天栏：
+
+<img src="docs/images/tiktok-live.jpg" alt="TikTok 竖屏直播间双语字幕" width="100%">
+
+**站内本来就有字幕时自动让位** —— 不抢活，右下角提示一句就把控制权还给站点字幕：
+
+<img src="docs/images/native-priority.jpg" alt="检测到站内字幕时自动切回原生字幕" width="100%">
+
 ## 🚀 主要功能
 
 * **实时双语字幕**：上行译文、下行原文，一次看懂——**任何语种**（英/日/韩/法/德…）都按这个格式呈现。
