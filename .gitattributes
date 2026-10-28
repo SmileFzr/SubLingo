@@ -1,0 +1,9 @@
+# 统一使用 LF 换行，避免 Windows 上反复出现 CRLF 转换提示
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary

@@ -1,0 +1,12 @@
+# 编辑器 / 系统杂项
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 本地 AI 工作记录（不进公开仓库）
+.workbuddy/
+
+# 打包产物
+*.zip
+*.crx
+*.pem

@@ -1,17 +1,33 @@
-﻿{
+{
   "manifest_version": 3,
-  "name": "YouTube 实时字幕翻译器（Edge/Chrome 通用版）",
-  "version": "1.0.2",
-  "description": "兼容 Edge 和 Chrome 的 YouTube 实时字幕翻译扩展程序。支持定制样式、拖拽定位和字幕导出。",
+  "name": "SubLingo · 双语字幕",
+  "version": "3.0.0",
+  "description": "为 YouTube、Bilibili、Twitch、Kick、TikTok 等视频网站提供实时双语字幕：支持拖拽定位、样式预设、本地 SRT/VTT 对齐与字幕导出。",
   "permissions": [
+    "storage",
     "activeTab",
-    "storage", 
     "scripting",
-    "tabs", 
-    "windows"
+    "tabs"
   ],
   "host_permissions": [
-    "*://www.youtube.com/*" 
+    "*://*.youtube.com/*",
+    "*://*.youtube-nocookie.com/*",
+    "*://*.bilibili.com/*",
+    "*://*.twitch.tv/*",
+    "*://*.kick.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.vimeo.com/*",
+    "*://*.dailymotion.com/*",
+    "*://*.nicovideo.jp/*",
+    "*://*.iqiyi.com/*",
+    "*://*.youku.com/*",
+    "*://*.twitter.com/*",
+    "*://*.x.com/*",
+    "*://*.facebook.com/*",
+    "*://*.coursera.org/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
   ],
   "icons": {
     "16": "icons/icon16.png",
@@ -19,7 +35,8 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html", 
+    "default_popup": "popup.html",
+    "default_title": "SubLingo 双语字幕",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -28,8 +45,26 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["content.js"]
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.youtube-nocookie.com/*",
+        "*://*.bilibili.com/*",
+        "*://*.twitch.tv/*",
+        "*://*.kick.com/*",
+        "*://*.tiktok.com/*",
+        "*://*.vimeo.com/*",
+        "*://*.dailymotion.com/*",
+        "*://*.nicovideo.jp/*",
+        "*://*.iqiyi.com/*",
+        "*://*.youku.com/*",
+        "*://*.twitter.com/*",
+        "*://*.x.com/*",
+        "*://*.facebook.com/*",
+        "*://*.coursera.org/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ]
 }

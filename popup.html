@@ -1,182 +1,568 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <title>翻译设置</title>
-    <style>
-        /* 整体容器和字体美化 */
-        body { 
-            min-width: 300px; 
-            max-width: 350px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-            padding: 15px; 
-            background-color: #f7f9fa; 
-            color: #333;
-        }
-        h3 { 
-            margin-top: 0; 
-            margin-bottom: 15px;
-            text-align: center; 
-            color: #1a1a1a; 
-            font-weight: 600;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        
-        /* 表单元素样式 */
-        label { 
-            display: block; 
-            margin-top: 15px; 
-            font-weight: 500; 
-            font-size: 13px; 
-            color: #555; 
-            line-height: 1.5;
-        }
-        select, input:not([type="range"]):not([type="color"]) { 
-            width: 100%; 
-            padding: 8px 10px; 
-            margin-top: 5px; 
-            box-sizing: border-box; 
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background-color: white;
-            transition: border-color 0.2s;
-        }
-        select:focus, input:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-        }
-        input[type="color"] { 
-            height: 38px; 
-            width: 100%; 
-            border: 1px solid #ddd; 
-            padding: 2px; 
-            margin-top: 5px; 
-            cursor: pointer;
-            border-radius: 6px;
-        }
-        
-        /* 范围输入 (Range) 的值显示 */
-        .range-container { margin-top: 5px; }
-        .range-container span { float: right; font-weight: bold; color: #007bff; }
-        
-        /* 按钮网格布局（核心改动） */
-        .button-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 两列等宽 */
-            gap: 10px; 
-            margin-top: 20px;
-        }
-        
-        button { 
-            padding: 10px 5px; 
-            border: none; 
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        button:hover { 
-            opacity: 0.9;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        button:active { 
-            transform: translateY(0); 
-            box-shadow: none;
-        }
+<meta charset="utf-8">
+<title>双语字幕</title>
+<style>
+    :root {
+        --paper: #F7F2EA;
+        --paper-2: #FBF7F0;
+        --card: #FFFDFA;
+        --ink: #2B2621;
+        --ink-2: #6F6559;
+        --ink-3: #A2988A;
+        --line: #EAE1D3;
+        --clay: #C0684A;
+        --clay-deep: #A85739;
+        --clay-soft: #F7E7DF;
+        --sage: #6F8A6B;
+        --amber: #C79A4B;
+        --shadow: 0 1px 2px rgba(43, 38, 33, .05), 0 10px 24px -16px rgba(43, 38, 33, .3);
+    }
 
-        /* 按钮配色方案 */
-        .btn-primary { background-color: #007bff; color: white; } 
-        .btn-success { background-color: #28a745; color: white; } 
-        .btn-danger { background-color: #dc3545; color: white; } 
-        .btn-info { background-color: #17a2b8; color: white; } 
-        .btn-warning { background-color: #ffc107; color: #333; } 
-        .btn-secondary { background-color: #6c757d; color: white; } 
-        
-        /* 提示信息 */
-        .hint { 
-            margin-top: 20px; 
-            padding: 10px;
-            font-size: 12px; 
-            color: #4a4a4a; 
-            text-align: center; 
-            background: #e9ecef; 
-            border-radius: 6px;
-        }
-    </style>
+    * { box-sizing: border-box; }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 372px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        font-size: 13px;
+        color: var(--ink);
+        background:
+            radial-gradient(120% 80% at 100% 0%, #FBF3E9 0%, rgba(251, 243, 233, 0) 62%),
+            var(--paper);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------------- 顶部 ---------------- */
+    .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px 11px;
+        background: linear-gradient(180deg, rgba(255, 253, 250, .96), rgba(251, 247, 240, .84));
+        border-bottom: 1px solid var(--line);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+
+    .mark {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 15px;
+        font-weight: 700;
+        color: #FFF8F2;
+        background: linear-gradient(150deg, #CB7A5A 0%, #C0684A 55%, #A85739 100%);
+        box-shadow: 0 2px 6px -1px rgba(168, 87, 57, .45), inset 0 1px 0 rgba(255, 255, 255, .28);
+    }
+
+    .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .brand-text b { font-size: 14px; font-weight: 650; letter-spacing: .01em; }
+    .brand-text i {
+        font-style: normal;
+        font-size: 10px;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-top: 2px;
+    }
+
+    .switch { position: relative; display: inline-flex; cursor: pointer; }
+    .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .track {
+        width: 42px;
+        height: 24px;
+        border-radius: 99px;
+        background: #E2D8CA;
+        transition: background .22s cubic-bezier(.4, 0, .2, 1);
+        display: block;
+        position: relative;
+    }
+    .thumb {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #FFFDFA;
+        box-shadow: 0 1px 3px rgba(43, 38, 33, .25);
+        transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+    }
+    .switch input:checked + .track { background: var(--sage); }
+    .switch input:checked + .track .thumb { transform: translateX(18px); }
+
+    /* ---------------- 状态条 ---------------- */
+    .status {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin: 10px 16px 0;
+        padding: 8px 12px;
+        border-radius: 11px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+    }
+
+    .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ink-3);
+        flex: none;
+        box-shadow: 0 0 0 3px rgba(162, 152, 138, .14);
+        transition: background .2s, box-shadow .2s;
+    }
+    .dot.ok { background: var(--sage); box-shadow: 0 0 0 3px rgba(111, 138, 107, .16); }
+    .dot.warn { background: var(--amber); box-shadow: 0 0 0 3px rgba(199, 154, 75, .18); }
+
+    .status-main { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; flex: 1; }
+    .status-main b { font-size: 12.5px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .status-main i { font-style: normal; font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ---------------- 内容区 ---------------- */
+    .content {
+        padding: 11px 16px 0;
+        max-height: 350px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+    }
+    .content::-webkit-scrollbar { width: 6px; }
+    .content::-webkit-scrollbar-thumb { background: #E1D6C6; border-radius: 99px; }
+    .content::after {
+        content: '';
+        display: block;
+        position: sticky;
+        bottom: 0;
+        height: 14px;
+        margin-top: -14px;
+        background: linear-gradient(to top, var(--paper) 30%, rgba(247, 242, 234, 0));
+        pointer-events: none;
+    }
+
+    .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 10px 13px 11px;
+        margin-bottom: 9px;
+        box-shadow: var(--shadow);
+    }
+
+    .card-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 650;
+        letter-spacing: .14em;
+        color: var(--ink-3);
+        margin-bottom: 9px;
+    }
+    .title-hint {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .04em;
+        color: #BCB1A1;
+    }
+
+    /* 语言行 */
+    .lang-row { display: flex; align-items: center; gap: 8px; }
+    .lang-row select { flex: 1; min-width: 0; }
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        padding: 8px 26px 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background-color: #FFFDFA;
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A2988A' stroke-width='1.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        color: var(--ink);
+        font-size: 12.5px;
+        font-family: inherit;
+        cursor: pointer;
+        outline: none;
+        transition: border-color .18s, box-shadow .18s;
+    }
+    select:hover { border-color: #DCCFBC; }
+    select:focus { border-color: var(--clay); box-shadow: 0 0 0 3px rgba(192, 104, 74, .12); }
+
+    .swap {
+        flex: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        border: 1px solid var(--line);
+        background: var(--paper-2);
+        color: var(--ink-2);
+        font-size: 13px;
+        line-height: 1;
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .swap:hover { background: var(--clay-soft); border-color: #EBCFBE; color: var(--clay-deep); transform: rotate(180deg); }
+
+    /* 预设胶囊 */
+    .chips { display: flex; gap: 6px; margin-bottom: 12px; }
+    .chip {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 6px 4px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: #FFFDFA;
+        color: var(--ink-2);
+        font-size: 11.5px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all .16s;
+    }
+    .chip:hover { border-color: #DCCFBC; background: var(--paper-2); }
+    .chip.active {
+        border-color: #E0B39E;
+        background: var(--clay-soft);
+        color: var(--clay-deep);
+        font-weight: 650;
+        box-shadow: inset 0 0 0 1px rgba(192, 104, 74, .1);
+    }
+    .chip .sw {
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+        background: linear-gradient(135deg, var(--a) 50%, var(--b) 50%);
+        border: 1px solid rgba(43, 38, 33, .28);
+        flex: none;
+    }
+
+    /* 一行式滑块：标签 / 滑轨 / 数值 */
+    .row-field {
+        display: grid;
+        grid-template-columns: 40px 1fr 44px;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 8px;
+    }
+    .rf-label { font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+    .rf-value {
+        font-size: 12px;
+        text-align: right;
+        font-weight: 650;
+        color: var(--clay-deep);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 18px;
+        background: transparent;
+        outline: none;
+        cursor: pointer;
+        margin: 0;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+        height: 4px;
+        border-radius: 99px;
+        background: linear-gradient(to right, var(--clay) 0%, var(--clay) var(--p, 50%), #EAE1D3 var(--p, 50%), #EAE1D3 100%);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        margin-top: -5px;
+        border-radius: 50%;
+        background: #FFFDFA;
+        border: 2px solid var(--clay);
+        box-shadow: 0 1px 3px rgba(43, 38, 33, .22);
+        transition: transform .14s;
+    }
+    input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.14); }
+
+    /* 颜色与原文开关 */
+    .colors {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 2px;
+        padding-top: 11px;
+        border-top: 1px dashed #EFE7DA;
+    }
+    .color-field { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .swatch {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+        border: 1px solid #D8CBB8;
+        overflow: hidden;
+        display: block;
+        position: relative;
+        box-shadow: inset 0 0 0 2px #FFFDFA;
+        flex: none;
+    }
+    .swatch input[type="color"] {
+        position: absolute;
+        inset: -30%;
+        width: 160%;
+        height: 160%;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    .cf-label { font-size: 11.5px; color: var(--ink-2); }
+
+    .switch-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+        cursor: pointer;
+        font-size: 11.5px;
+        color: var(--ink-2);
+    }
+    .switch-row input { accent-color: var(--clay); width: 14px; height: 14px; cursor: pointer; }
+
+    /* 本地字幕 */
+    .card.subtle { background: linear-gradient(180deg, #FFFDFA, #FCF8F1); }
+    .file-row { display: flex; align-items: center; gap: 8px; }
+    .file-name {
+        flex: 1;
+        min-width: 0;
+        font-size: 11.5px;
+        color: var(--ink-3);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .file-name.loaded { color: var(--sage); font-weight: 600; }
+    .tip {
+        margin: 8px 0 0;
+        font-size: 11px;
+        line-height: 1.5;
+        color: var(--ink-3);
+        display: none;
+    }
+    .card.subtle.need-hint .tip { display: block; }
+
+    /* 按钮 */
+    .ghost {
+        padding: 7px 12px;
+        border-radius: 9px;
+        border: 1px solid var(--line);
+        background: #FFFDFA;
+        color: var(--ink-2);
+        font-size: 12px;
+        font-family: inherit;
+        font-weight: 550;
+        cursor: pointer;
+        transition: all .16s;
+        white-space: nowrap;
+    }
+    .ghost:hover { border-color: #DCCFBC; background: var(--paper-2); color: var(--ink); }
+    .ghost:active { transform: translateY(1px); }
+
+    .ghost-mini {
+        padding: 3px 8px;
+        border-radius: 7px;
+        border: 1px solid #E0B39E;
+        background: var(--clay-soft);
+        color: var(--clay-deep);
+        font-size: 10.5px;
+        font-family: inherit;
+        font-weight: 650;
+        cursor: pointer;
+        white-space: nowrap;
+        flex: none;
+    }
+
+    /* ---------------- 底部 ---------------- */
+    .bottom {
+        padding: 10px 16px 11px;
+        border-top: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(251, 247, 240, .55), rgba(247, 242, 234, .95));
+    }
+
+    .primary {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 11px;
+        background: linear-gradient(180deg, #C97A5B 0%, #BE6446 100%);
+        color: #FFF9F4;
+        font-size: 13px;
+        font-family: inherit;
+        font-weight: 650;
+        letter-spacing: .04em;
+        cursor: pointer;
+        box-shadow: 0 3px 10px -4px rgba(168, 87, 57, .6), inset 0 1px 0 rgba(255, 255, 255, .22);
+        transition: all .16s;
+    }
+    .primary:hover { filter: brightness(1.04); }
+    .primary:active { transform: translateY(1px); }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+
+    .foot-note {
+        margin: 8px 0 0;
+        text-align: center;
+        font-size: 10.5px;
+        color: var(--ink-3);
+        letter-spacing: .02em;
+    }
+    kbd {
+        display: inline-block;
+        padding: 1px 5px;
+        border-radius: 5px;
+        border: 1px solid var(--line);
+        background: #FFFDFA;
+        font-family: inherit;
+        font-size: 10px;
+        color: var(--ink-2);
+        box-shadow: 0 1px 0 rgba(43, 38, 33, .06);
+    }
+</style>
 </head>
 <body>
-    <h3>🎬 字幕翻译设置</h3>
-
-    <label for="source-lang">视频字幕语种 (源语言):</label>
-    <select id="source-lang">
-        <option value="auto">自动检测 (Auto)</option>
-        <option value="zh">中文 (Chinese)</option>
-        <option value="en">英文 (English)</option>
-        <option value="ja">日文 (Japanese)</option>
-        <option value="ko">韩文 (Korean)</option>
-        <option value="fr">法文 (French)</option>
-        <option value="de">德文 (German)</option>
-        <option value="es">西班牙文 (Spanish)</option>
-        <option value="ru">俄文 (Russian)</option>
-        <option value="ar">阿拉伯文 (Arabic)</option>
-        <option value="pt">葡萄牙文 (Portuguese)</option>
-    </select>
-    
-    <label for="target-lang">翻译目标语种:</label>
-    <select id="target-lang">
-        <option value="zh">中文 (Chinese)</option>
-        <option value="en">英文 (English)</option>
-        <option value="ja">日文 (Japanese)</option>
-        <option value="ko">韩文 (Korean)</option>
-        <option value="fr">法文 (French)</option>
-        <option value="de">德文 (German)</option>
-        <option value="es">西班牙文 (Spanish)</option>
-        <option value="ru">俄文 (Russian)</option>
-        <option value="ar">阿拉伯文 (Arabic)</option>
-        <option value="pt">葡萄牙文 (Portuguese)</option>
-    </select>
-
-    <label for="font-size">字体和样式设置:</label>
-    
-    <div class="range-container">
-        字幕大小 (<span id="font-size-value">100</span>%):
-        <input type="range" id="font-size" min="50" max="200" value="100">
-    </div>
-
-    <div class="range-container">
-        最大行数 (<span id="line-count-value">2</span>行):
-        <input type="range" id="line-count" min="1" max="4" value="2">
-    </div>
-    
-    <div class="range-container">
-        分段缓存时间 (<span id="debounce-delay-value">500</span>ms):
-        <input type="range" id="debounce-delay" min="200" max="1500" step="50" value="500">
-    </div>
-    
-    <div style="display: flex; gap: 10px; margin-top: 15px;">
-        <div style="flex: 1;">
-            <label for="font-color" style="margin-top: 0;">字体颜色:</label>
-            <input type="color" id="font-color" value="#FFFF00">
+    <header class="top">
+        <div class="brand">
+            <span class="mark">译</span>
+            <span class="brand-text">
+                <b>双语字幕</b>
+                <i>SubLingo</i>
+            </span>
         </div>
-        <div style="flex: 1;">
-            <label for="bg-color" style="margin-top: 0;">背景颜色:</label>
-            <input type="color" id="bg-color" value="#000000">
+        <label class="switch" title="字幕开关">
+            <input type="checkbox" id="power">
+            <span class="track"><span class="thumb"></span></span>
+        </label>
+    </header>
+
+    <div class="status">
+        <span class="dot" id="dot"></span>
+        <span class="status-main">
+            <b id="site-name">正在检测…</b>
+            <i id="engine-text">读取当前页面状态</i>
+        </span>
+        <button class="ghost-mini" id="btn-enable-site" hidden>此站启用</button>
+    </div>
+
+    <main class="content">
+        <section class="card">
+            <div class="lang-row">
+                <select id="source-lang">
+                    <option value="auto">自动检测</option>
+                    <option value="en">英语</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日语</option>
+                    <option value="ko">韩语</option>
+                    <option value="fr">法语</option>
+                    <option value="de">德语</option>
+                    <option value="es">西班牙语</option>
+                    <option value="ru">俄语</option>
+                    <option value="pt">葡萄牙语</option>
+                    <option value="ar">阿拉伯语</option>
+                    <option value="vi">越南语</option>
+                    <option value="th">泰语</option>
+                    <option value="id">印尼语</option>
+                </select>
+                <button class="swap" id="swap" title="互换语种">⇄</button>
+                <select id="target-lang">
+                    <option value="zh">中文</option>
+                    <option value="en">英语</option>
+                    <option value="ja">日语</option>
+                    <option value="ko">韩语</option>
+                    <option value="fr">法语</option>
+                    <option value="de">德语</option>
+                    <option value="es">西班牙语</option>
+                    <option value="ru">俄语</option>
+                    <option value="pt">葡萄牙语</option>
+                    <option value="ar">阿拉伯语</option>
+                    <option value="vi">越南语</option>
+                    <option value="th">泰语</option>
+                    <option value="id">印尼语</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-title"><span>字幕样式</span><span class="title-hint">点击即生效</span></div>
+            <div class="chips" id="presets">
+                <button class="chip" data-preset="cinema"><span class="sw" style="--a:#FFFFFF;--b:#0B0B0D"></span>影院</button>
+                <button class="chip" data-preset="class"><span class="sw" style="--a:#FFE7B3;--b:#1A1512"></span>课堂</button>
+                <button class="chip" data-preset="minimal"><span class="sw" style="--a:#FFFFFF;--b:#FBEFDD"></span>极简</button>
+                <button class="chip" data-preset="contrast"><span class="sw" style="--a:#FFE45C;--b:#000000"></span>高对比</button>
+            </div>
+
+            <div class="row-field">
+                <span class="rf-label">字号</span>
+                <input type="range" id="font-size" min="60" max="200" step="5" value="100">
+                <b class="rf-value"><span id="font-size-value">100</span>%</b>
+            </div>
+            <div class="row-field">
+                <span class="rf-label">行数</span>
+                <input type="range" id="line-count" min="1" max="4" step="1" value="2">
+                <b class="rf-value"><span id="line-count-value">2</span> 行</b>
+            </div>
+            <div class="row-field">
+                <span class="rf-label">底色</span>
+                <input type="range" id="bg-opacity" min="0" max="100" step="2" value="62">
+                <b class="rf-value"><span id="bg-opacity-value">62</span>%</b>
+            </div>
+
+            <div class="colors">
+                <label class="color-field">
+                    <span class="swatch"><input type="color" id="font-color" value="#FFFFFF"></span>
+                    <span class="cf-label">文字</span>
+                </label>
+                <label class="color-field">
+                    <span class="swatch"><input type="color" id="bg-color" value="#0B0B0D"></span>
+                    <span class="cf-label">底色</span>
+                </label>
+                <label class="switch-row">
+                    <input type="checkbox" id="show-original" checked>
+                    <span>显示原文</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="card subtle">
+            <div class="file-row">
+                <button class="ghost" id="pick-file">本地字幕</button>
+                <span class="file-name" id="file-name">未加载</span>
+                <button class="ghost-mini" id="clear-file" hidden>移除</button>
+            </div>
+            <p class="tip">站点自身不提供字幕时（例如 TikTok、Kick 的硬字幕视频），加载 .srt / .vtt 即可按播放进度对齐翻译。</p>
+            <input type="file" id="file-input" accept=".srt,.vtt,text/plain" hidden>
+        </section>
+    </main>
+
+    <footer class="bottom">
+        <button class="primary" id="btn-refresh">重新检测字幕</button>
+        <div class="row">
+            <button class="ghost" id="btn-export">导出 SRT</button>
+            <button class="ghost" id="btn-reset">恢复默认</button>
         </div>
-    </div>
-    
-    <div class="button-grid">
-        <button id="apply-settings" class="btn-primary">应用设置</button>
-        <button id="toggle-subtitles" class="btn-danger">关闭字幕</button>
-        <button id="manual-refresh" class="btn-info">手动刷新</button>
-        <button id="export-subtitles" class="btn-warning">导出字幕</button>
-        <button id="reset-settings" class="btn-secondary" style="grid-column: span 2;">恢复默认设置</button> 
-    </div>
-    
-    <div class="hint">💡 **Alt 键 + 鼠标** 可拖动字幕位置。</div>
+        <p class="foot-note">按住 <kbd>Alt</kbd> 拖动字幕可调整位置</p>
+    </footer>
 
     <script src="popup.js"></script>
 </body>
