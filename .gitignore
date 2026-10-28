@@ -6,7 +6,13 @@ desktop.ini
 # 本地 AI 工作记录（不进公开仓库）
 .workbuddy/
 
+# 本地回归测试脚手架（需起本地 HTTP 服务，不进公开仓库）
+.test/
+
 # 打包产物
 *.zip
 *.crx
 *.pem
+
+# 与本扩展无关的构建产物（避免误提交大文件，GitHub 单文件上限 100MB）
+*.apk

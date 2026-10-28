@@ -154,8 +154,8 @@
         background: var(--card);
         border: 1px solid var(--line);
         border-radius: 13px;
-        padding: 10px 13px 11px;
-        margin-bottom: 9px;
+        padding: 9px 13px 10px;
+        margin-bottom: 6px;
         box-shadow: var(--shadow);
     }
 
@@ -217,7 +217,7 @@
     .swap:hover { background: var(--clay-soft); border-color: #EBCFBE; color: var(--clay-deep); transform: rotate(180deg); }
 
     /* 预设胶囊 */
-    .chips { display: flex; gap: 6px; margin-bottom: 12px; }
+    .chips { display: flex; gap: 6px; margin-bottom: 10px; }
     .chip {
         flex: 1;
         display: flex;
@@ -257,7 +257,7 @@
         grid-template-columns: 40px 1fr 44px;
         align-items: center;
         gap: 9px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
     }
     .rf-label { font-size: 12px; color: var(--ink-2); white-space: nowrap; }
     .rf-value {
@@ -303,7 +303,7 @@
         align-items: center;
         gap: 15px;
         margin-top: 2px;
-        padding-top: 11px;
+        padding-top: 8px;
         border-top: 1px dashed #EFE7DA;
     }
     .color-field { display: flex; align-items: center; gap: 6px; cursor: pointer; }
@@ -421,12 +421,144 @@
 
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 
+    /* ---------- AI 语音识别 ---------- */
+    .new-badge {
+        display: inline-block;
+        margin-left: 5px;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: var(--clay-soft);
+        color: var(--clay-deep);
+        font-size: 9px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: .04em;
+        vertical-align: 1px;
+    }
+
+    .ai-models { display: flex; gap: 5px; }
+    .ai-models button {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        padding: 6px 2px 5px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: var(--card);
+        color: var(--ink-2);
+        font: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.25;
+        cursor: pointer;
+        transition: all .15s;
+    }
+    .ai-models button i {
+        font-style: normal;
+        font-size: 9px;
+        font-weight: 500;
+        color: var(--ink-3);
+        letter-spacing: .01em;
+    }
+    .ai-models button:hover:not(:disabled) { border-color: #D8CBB8; }
+    .ai-models button.on {
+        border-color: var(--clay);
+        background: var(--clay-soft);
+        color: var(--clay-deep);
+    }
+    .ai-models button.on i { color: var(--clay); }
+    .ai-models button:disabled { opacity: .45; cursor: not-allowed; }
+
+    .ai-foot { display: flex; align-items: center; gap: 9px; margin-top: 9px; }
+    .ai-state {
+        flex: 1;
+        min-width: 0;
+        font-size: 10.5px;
+        line-height: 1.4;
+        color: var(--ink-3);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .ai-state.on { color: var(--sage); }
+    .ai-state.err {
+        color: #B4553C;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .ai-diag {
+        flex: none;
+        padding: 5px 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ink-3);
+        font: inherit;
+        font-size: 10.5px;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all .15s;
+    }
+    .ai-diag:hover { border-color: var(--clay); color: var(--clay-deep); }
+
+    .ai-btn {
+        flex: none;
+        padding: 6px 14px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        background: var(--clay);
+        color: #FFF9F3;
+        font: inherit;
+        font-size: 11.5px;
+        font-weight: 650;
+        letter-spacing: .02em;
+        cursor: pointer;
+        transition: all .15s;
+    }
+    .ai-btn:hover { background: var(--clay-deep); }
+    .ai-btn.stop {
+        background: transparent;
+        border-color: var(--line);
+        color: var(--ink-2);
+    }
+    .ai-btn.stop:hover { border-color: var(--clay); color: var(--clay-deep); background: transparent; }
+    .ai-btn:disabled { opacity: .5; cursor: default; }
+
+    .ai-bar {
+        height: 3px;
+        margin-top: 8px;
+        border-radius: 2px;
+        background: var(--line);
+        overflow: hidden;
+        display: none;
+    }
+    .ai-bar.show { display: block; }
+    .ai-bar > span {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: 2px;
+        background: var(--clay);
+        transition: width .3s ease;
+    }
+
     .foot-note {
         margin: 8px 0 0;
         text-align: center;
         font-size: 10.5px;
         color: var(--ink-3);
         letter-spacing: .02em;
+    }
+    .foot-note .ver {
+        font-variant-numeric: tabular-nums;
+        color: var(--clay);
+        opacity: .75;
     }
     kbd {
         display: inline-block;
@@ -504,6 +636,24 @@
         </section>
 
         <section class="card">
+            <div class="card-title">
+                <span>AI 语音识别<em class="new-badge">新</em></span>
+                <span class="title-hint">本机运行 · 不上传</span>
+            </div>
+            <div class="ai-models" id="ai-models">
+                <button data-model="tiny" title="最快，但只适合英语视频；中日韩和带背景音乐的场景基本认不出人声">快速<i>40MB</i></button>
+                <button data-model="base" class="on" title="推荐：中日韩、带背景音乐时也能用，单段约 5-8 秒">均衡<i>80MB</i></button>
+                <button data-model="small" title="最准，但本机单线程推理较慢（10 秒以上），适合录播">精准<i>200MB</i></button>
+            </div>
+            <div class="ai-foot">
+                <span class="ai-state" id="ai-state">视频没有字幕时，识别语音并翻译</span>
+                <button class="ai-diag" id="ai-diag" hidden>复制诊断</button>
+                <button class="ai-btn" id="ai-btn">开启</button>
+            </div>
+            <div class="ai-bar" id="ai-bar"><span id="ai-bar-fill"></span></div>
+        </section>
+
+        <section class="card">
             <div class="card-title"><span>字幕样式</span><span class="title-hint">点击即生效</span></div>
             <div class="chips" id="presets">
                 <button class="chip" data-preset="cinema"><span class="sw" style="--a:#FFFFFF;--b:#0B0B0D"></span>影院</button>
@@ -513,9 +663,14 @@
             </div>
 
             <div class="row-field">
-                <span class="rf-label">字号</span>
+                <span class="rf-label">译文</span>
                 <input type="range" id="font-size" min="60" max="200" step="5" value="100">
                 <b class="rf-value"><span id="font-size-value">100</span>%</b>
+            </div>
+            <div class="row-field">
+                <span class="rf-label">原文</span>
+                <input type="range" id="original-scale" min="30" max="130" step="2" value="68">
+                <b class="rf-value"><span id="original-scale-value">68</span>%</b>
             </div>
             <div class="row-field">
                 <span class="rf-label">行数</span>
@@ -561,7 +716,7 @@
             <button class="ghost" id="btn-export">导出 SRT</button>
             <button class="ghost" id="btn-reset">恢复默认</button>
         </div>
-        <p class="foot-note">按住 <kbd>Alt</kbd> 拖动字幕可调整位置</p>
+        <p class="foot-note">按住 <kbd>Alt</kbd> 拖动字幕可调整位置 · <span class="ver">v3.6.0</span></p>
     </footer>
 
     <script src="popup.js"></script>
